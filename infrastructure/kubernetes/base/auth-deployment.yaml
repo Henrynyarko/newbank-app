@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  labels:
+    app: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      nodeSelector:
+        environment: dev
+        service: auth
+      containers:
+      - name: auth-service
+        image: ernest633/auth-service:latest
+        ports:
+        - containerPort: 8000
+        env:
+          - name: DB_HOST
+            value: dev-postgres
+          - name: DB_USER
+            value: testuser
+          - name: DB_PASSWORD
+            value: testpass
+          - name: DB_NAME
+            value: newbank

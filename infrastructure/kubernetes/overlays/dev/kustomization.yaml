@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1
+kind: Kustomization
+
+# Base manifests
+bases:
+  - ../../base
+
+# Patches for dev
+patchesStrategicMerge:
+  - deployment-patch.yaml
+
+# Add dev DB
+resources:
+  - db-deployment.yaml
+  - db-service.yaml

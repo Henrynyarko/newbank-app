@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-service
+  labels:
+    app: transaction-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-service
+  template:
+    metadata:
+      labels:
+        app: transaction-service
+    spec:
+      nodeSelector:
+        environment: dev
+        service: transact
+      containers:
+      - name: transaction-service
+        image: ernest633/transaction-service:latest
+        ports:
+        - containerPort: 8002
+        env:
+          - name: DB_HOST
+            value: dev-postgres
+          - name: DB_USER
+            value: testuser
+          - name: DB_PASSWORD
+            value: testpass
+          - name: DB_NAME
+            value: newbank
